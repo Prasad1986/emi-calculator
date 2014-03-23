@@ -1,0 +1,43 @@
+<html>
+<head>
+</head>
+<body>
+<script>
+var date = new Date();
+var dayOfEmi = 11;
+var curMonth = date.getMonth() + 1;
+var curYear = date.getFullYear();
+var ydate = new Date(curYear,0,0);
+var ydate1 = new Date(curYear+1,0,0);
+var no_of_day_in_year = (ydate1-ydate)/(60*60*24*1000);
+var interest_rate = 10.5;
+var starting_amount = 1417330;
+var emiAmount = 21600+21601;
+document.write("<table>");
+while(starting_amount > 0){
+	var lastDayOfMonth = (new Date(curYear, curMonth ,0)).getDate();
+	var int_before_emi = (dayOfEmi*starting_amount*interest_rate)/(no_of_day_in_year*100);
+	var int_after_emi = ((lastDayOfMonth-dayOfEmi)*(starting_amount-emiAmount)*interest_rate)/(no_of_day_in_year*100)
+	document.write("<tr>");
+	document.write("<td>"+Math.round(starting_amount)+"<td/>");
+	document.write("<td>"+Math.round(int_before_emi)+"<td/>");
+	document.write("<td>"+Math.round(int_after_emi)+"<td/>");
+	document.write("<td>"+Math.round(int_before_emi+int_after_emi)+"<td/>");
+	starting_amount = starting_amount - emiAmount + int_before_emi + int_after_emi;
+	document.write("<td>"+Math.round(starting_amount)+"<td/>");
+	document.write("<td>"+ (curMonth) +"<td/>");
+	document.write("<td>"+ (curYear) +"<td/>");
+	document.write("<tr\>");
+	curMonth = curMonth + 1;
+	if(curMonth == 13){
+		curMonth = 1;
+		curYear = curYear + 1;
+		ydate = new Date(curYear,0,0);
+		ydate1 = new Date(curYear+1,0,0);
+		no_of_day_in_year = (ydate1-ydate)/(60*60*24*1000);
+	}		
+}
+document.write("<table\>");
+</script>
+</body>
+</html>
