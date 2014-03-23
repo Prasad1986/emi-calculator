@@ -60,29 +60,30 @@ body {
 <h3>SBI EMI, Interest Table Generator for Home or Car Loan</h3>
 <div class="row">
       <div class="starter-template col-sm-8">
+Enter Interest Rate, Remaining Loan Amount, Emi Amount and Day of month on which your emi is deducted and click on Generate Table to get your emi schedule
 <form class="form-horizontal" role="form">
   <div class="form-group">
     <label for="intrate" class="col-sm-2 control-label">Interest Rate</label>
 	<div class="col-sm-10">
-		<input type="text" class="form-control" id="intrate" placeholder="Enter Interest Rate">
+		<input type="text" class="form-control" id="intrate" placeholder="Enter Interest Rate" value="10.5">
 	</div>
   </div>
   <div class="form-group">
     <label for="remAmount" class="col-sm-2 control-label">Remaining Loan Amount</label>
 	<div class="col-sm-10">
-		<input type="text" class="form-control" id="remAmount" placeholder="Enter Remaing Loan Amount">
+		<input type="text" class="form-control" id="remAmount" placeholder="Enter Remaing Loan Amount" value="1,000,000">
 	</div>
   </div>
   <div class="form-group">
     <label for="emiAmount" class="col-sm-2 control-label">Emi Amount</label>
 	<div class="col-sm-10">
-		<input type="text" class="form-control" id="emiAmount" placeholder="Enter Emi Amount">
+		<input type="text" class="form-control" id="emiAmount" placeholder="Enter Emi Amount" value="20,000">
 	</div>
   </div>
   <div class="form-group">
     <label for="dayOfEmi" class="col-sm-2 control-label">day of month on which emi is paid</label>
 	<div class="col-sm-10">
-		<input type="text" class="form-control" id="dayOfEmi" placeholder="Enter day of month on which emi is paid">
+		<input type="text" class="form-control" id="dayOfEmi" placeholder="Enter day of month on which emi is paid" value="10">
 	</div>
   </div>
   <div class="form-group">
@@ -97,7 +98,8 @@ body {
 function generateTable(){
 document.getElementById("content").innerHTML = "";
 var date = new Date();
-var dayOfEmi = document.getElementById('dayOfEmi').value;
+var dateofEmi = document.getElementById('dayOfEmi').value;
+var dayOfEmi = dateofEmi - 1;
 var curMonth = date.getMonth() + 1;
 var curYear = date.getFullYear();
 var ydate = new Date(curYear,0,0);
@@ -111,7 +113,7 @@ var content = "";
 var content1 = "";
 content += "<table class='table'>";
 content += "<tr>";
-content += "<td>Amount<td/> <td>Interest till emi date<td/> <td>Interest from emi date to End of Month<td/> <td>Total Interest<td/> <td>Amount at end of month include total Interest - Emi<td/> <td>Month<td/> <td>Year<td/>";
+content += "<td>Remaining Loan Amount<td/> <td>Interest till emi date<td/> <td>Interest from emi date to End of Month<td/> <td>Total Interest<td/> <td>Amount at end of month include total Interest - Emi<td/> <td>Month<td/> <td>Year<td/>";
 content += "<tr/>";
 while(starting_amount > 0){
 	var lastDayOfMonth = (new Date(curYear, curMonth ,0)).getDate();
@@ -128,7 +130,7 @@ while(starting_amount > 0){
 	if(starting_amount > emiAmount ){
 		starting_amount = starting_amount - emiAmount + int_before_emi + int_after_emi;
 	}else{
-		starting_amount = 0;	
+		starting_amount = 0;
 	}
 	content += "<td>"+Math.round(starting_amount)+"<td/>";
 	content += "<td>"+ (curMonth) +"<td/>";
@@ -182,6 +184,20 @@ document.getElementById("emiAmount").onblur = function (){
 	</script>
 </div>
 </div>
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_shortname = 'emipg'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
 
     </div><!-- /.container -->
 
