@@ -102,9 +102,9 @@ var curYear = date.getFullYear();
 var ydate = new Date(curYear,0,0);
 var ydate1 = new Date(curYear+1,0,0);
 var no_of_day_in_year = (ydate1-ydate)/(60*60*24*1000);
-var interest_rate = document.getElementById('intrate').value;
-var starting_amount = document.getElementById('remAmount').value.replace(/,/g, "");
-var emiAmount = document.getElementById('emiAmount').value.replace(/,/g, "");
+var interest_rate = parseFloat(document.getElementById('intrate').value);
+var starting_amount = parseInt(document.getElementById('remAmount').value.replace(/,/g, ""));
+var emiAmount = parseInt(document.getElementById('emiAmount').value.replace(/,/g, ""));
 var total_interest_paid = 0;
 var content = "";
 var content1 = "";
@@ -115,13 +115,20 @@ content += "<tr/>";
 while(starting_amount > 0){
 	var lastDayOfMonth = (new Date(curYear, curMonth ,0)).getDate();
 	var int_before_emi = (dayOfEmi*starting_amount*interest_rate)/(no_of_day_in_year*100);
-	var int_after_emi = ((lastDayOfMonth-dayOfEmi)*(starting_amount-emiAmount)*interest_rate)/(no_of_day_in_year*100);
+	var int_after_emi = 0;
+	if( (int_before_emi+starting_amount) > emiAmount ){
+		int_after_emi = ((lastDayOfMonth-dayOfEmi)*(starting_amount-emiAmount)*interest_rate)/(no_of_day_in_year*100);
+	}
 	content += "<tr>";
 	content += "<td>"+Math.round(starting_amount)+"<td/>";
 	content += "<td>"+Math.round(int_before_emi)+"<td/>";
 	content += "<td>"+Math.round(int_after_emi)+"<td/>";
 	content += "<td>"+Math.round(int_before_emi+int_after_emi)+"<td/>";
-	starting_amount = starting_amount - emiAmount + int_before_emi + int_after_emi;
+	if(starting_amount > emiAmount ){
+		starting_amount = starting_amount - emiAmount + int_before_emi + int_after_emi;
+	}else{
+		starting_amount = 0;	
+	}
 	content += "<td>"+Math.round(starting_amount)+"<td/>";
 	content += "<td>"+ (curMonth) +"<td/>";
 	content += "<td>"+ (curYear) +"<td/>";
