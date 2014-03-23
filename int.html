@@ -2,33 +2,43 @@
 <head>
 </head>
 <body>
+Interest Rate: <input type="text" id="intrate" name="intrate"><br>
+Remaing Amount: <input type="text" id="remAmount" name="remAmount"><br>
+Emi Amount: <input type="text" id="emiAmount" name="emiAmount"><br>
+day of month on which emi is paid: <input type="text" id="dayOfEmi" name="dayOfEmi"><br>
+<button onclick="generateTable()">Generate Table</button>
+<div id="content">
+</div>
 <script>
+function generateTable(){
+document.getElementById("content").innerHTML = "";
 var date = new Date();
-var dayOfEmi = 20;
+var dayOfEmi = document.getElementById('dayOfEmi').value;
 var curMonth = date.getMonth() + 1;
 var curYear = date.getFullYear();
 var ydate = new Date(curYear,0,0);
 var ydate1 = new Date(curYear+1,0,0);
 var no_of_day_in_year = (ydate1-ydate)/(60*60*24*1000);
-var interest_rate = 10.75;
-var starting_amount = 125384;
-var emiAmount = 9744;
-document.write("<table>");
+var interest_rate = document.getElementById('intrate').value;
+var starting_amount = document.getElementById('remAmount').value;;
+var emiAmount = document.getElementById('emiAmount').value;
 var total_interest_paid = 0;
+var content = "";
+content += "<table>";
 while(starting_amount > 0){
 	var lastDayOfMonth = (new Date(curYear, curMonth ,0)).getDate();
 	var int_before_emi = (dayOfEmi*starting_amount*interest_rate)/(no_of_day_in_year*100);
 	var int_after_emi = ((lastDayOfMonth-dayOfEmi)*(starting_amount-emiAmount)*interest_rate)/(no_of_day_in_year*100)
-	document.write("<tr>");
-	document.write("<td>"+Math.round(starting_amount)+"<td/>");
-	document.write("<td>"+Math.round(int_before_emi)+"<td/>");
-	document.write("<td>"+Math.round(int_after_emi)+"<td/>");
-	document.write("<td>"+Math.round(int_before_emi+int_after_emi)+"<td/>");
+	content += "<tr>";
+	content += "<td>"+Math.round(starting_amount)+"<td/>";
+	content += "<td>"+Math.round(int_before_emi)+"<td/>";
+	content += "<td>"+Math.round(int_after_emi)+"<td/>";
+	content += "<td>"+Math.round(int_before_emi+int_after_emi)+"<td/>";
 	starting_amount = starting_amount - emiAmount + int_before_emi + int_after_emi;
-	document.write("<td>"+Math.round(starting_amount)+"<td/>");
-	document.write("<td>"+ (curMonth) +"<td/>");
-	document.write("<td>"+ (curYear) +"<td/>");
-	document.write("<tr\>");
+	content += "<td>"+Math.round(starting_amount)+"<td/>";
+	content += "<td>"+ (curMonth) +"<td/>";
+	content += "<td>"+ (curYear) +"<td/>";
+	content += "<tr\>";
 	curMonth = curMonth + 1;
 	if(curMonth == 13){
 		curMonth = 1;
@@ -39,13 +49,17 @@ while(starting_amount > 0){
 	}
 	total_interest_paid = total_interest_paid + Math.round(int_before_emi + int_after_emi);
 }
-document.write("<table\>");
+content += "<table\>";
 
-document.write("<table>");
-	document.write("<tr>");
-	document.write("<td> total interest : "+total_interest_paid+"<td/>");
-	document.write("<tr\>");
-document.write("<table\>");
+content += "<table>";
+	content += "<tr>";
+	content += "<td> total interest : "+total_interest_paid+"<td/>";
+	content += "<tr\>";
+content += "<table\>";
+var div = document.createElement('div');
+div.innerHTML = content;
+document.getElementById('content').appendChild(div);
+}
 </script>
 </body>
 </html>
