@@ -4,16 +4,17 @@
 <body>
 <script>
 var date = new Date();
-var dayOfEmi = 11;
+var dayOfEmi = 20;
 var curMonth = date.getMonth() + 1;
 var curYear = date.getFullYear();
 var ydate = new Date(curYear,0,0);
 var ydate1 = new Date(curYear+1,0,0);
 var no_of_day_in_year = (ydate1-ydate)/(60*60*24*1000);
-var interest_rate = 10.5;
-var starting_amount = 1417330;
-var emiAmount = 21600+21601;
+var interest_rate = 10.75;
+var starting_amount = 125384;
+var emiAmount = 9744;
 document.write("<table>");
+var total_interest_paid = 0;
 while(starting_amount > 0){
 	var lastDayOfMonth = (new Date(curYear, curMonth ,0)).getDate();
 	var int_before_emi = (dayOfEmi*starting_amount*interest_rate)/(no_of_day_in_year*100);
@@ -35,8 +36,15 @@ while(starting_amount > 0){
 		ydate = new Date(curYear,0,0);
 		ydate1 = new Date(curYear+1,0,0);
 		no_of_day_in_year = (ydate1-ydate)/(60*60*24*1000);
-	}		
+	}
+	total_interest_paid = total_interest_paid + Math.round(int_before_emi + int_after_emi);
 }
+document.write("<table\>");
+
+document.write("<table>");
+	document.write("<tr>");
+	document.write("<td> total interest : "+total_interest_paid+"<td/>");
+	document.write("<tr\>");
 document.write("<table\>");
 </script>
 </body>
