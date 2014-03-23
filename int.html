@@ -107,9 +107,10 @@ var starting_amount = document.getElementById('remAmount').value.replace(/,/g, "
 var emiAmount = document.getElementById('emiAmount').value.replace(/,/g, "");
 var total_interest_paid = 0;
 var content = "";
+var content1 = "";
 content += "<table class='table'>";
 content += "<tr>";
-content += "<td>Amount<td/> <td>Interest till emi date<td/> <td>Interest from emi date to End of Month<td/> <td>Total Intreset<td/> <td>Amount at end of month include total Interest - Emi<td/> <td>Month<td/> <td>Year<td/>";
+content += "<td>Amount<td/> <td>Interest till emi date<td/> <td>Interest from emi date to End of Month<td/> <td>Total Interest<td/> <td>Amount at end of month include total Interest - Emi<td/> <td>Month<td/> <td>Year<td/>";
 content += "<tr/>";
 while(starting_amount > 0){
 	var lastDayOfMonth = (new Date(curYear, curMonth ,0)).getDate();
@@ -137,13 +138,13 @@ while(starting_amount > 0){
 }
 content += "<table\>";
 
-content += "<table>";
-	content += "<tr>";
-	content += "<td> total interest : "+total_interest_paid+"<td/>";
-	content += "<tr\>";
-content += "<table\>";
+content1 += "<table>";
+	content1 += "<tr>";
+	content1 += "<td> Total interest : "+total_interest_paid+"<td/>";
+	content1 += "<tr\>";
+content1 += "<table\><br/>";
 var div = document.createElement('div');
-div.innerHTML = content;
+div.innerHTML = content1 + content;
 document.getElementById('content').appendChild(div);
 return false;
 }
